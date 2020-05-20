@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this,GravityActivity.class));
                 break;
             case R.id.test_magnetic_sensor:
-//                startActivity(new Intent(this,MagneticFieldSensorActivity.class));
+                startActivity(new Intent(this,MagneticFieldSensorActivity.class));
                 break;
             case R.id.test_orientation:
-//                startActivity(new Intent(this,VirtualJax.class));
+                startActivity(new Intent(this,VirtualJax.class));
                 break;
             default:
                 break;

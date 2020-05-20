@@ -6,6 +6,6 @@
     <item android:title="Gyroscope sensor" android:id="@+id/test_gyroscope_sensor"/>
     <item android:title="Acceleration sensor" android:id="@+id/test_accelerometer_sensor"/>
     <item android:title="Gravity Test" android:id="@+id/test_accelerometer_2_sensor"/>
-    <item android:title="磁场传感器" android:id="@+id/test_magnetic_sensor"/>
-    <item android:title="方位测量" android:id="@+id/test_orientation"/>
+    <item android:title="Magnetic Field Sensors" android:id="@+id/test_magnetic_sensor"/>
+    <item android:title="Orientation Test" android:id="@+id/test_orientation"/>
 </menu>
