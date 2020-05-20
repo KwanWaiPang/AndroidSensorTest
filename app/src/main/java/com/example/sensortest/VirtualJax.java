@@ -57,7 +57,7 @@ public class VirtualJax extends AppCompatActivity implements SensorEventListener
         nowOne = (TextView) findViewById(R.id.preferred);//推荐的方式
 //        toggleButton = (ToggleButton) findViewById(R.id.toggle);
 
-        //定义传感器管理器
+        //定义传感器管理器。
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         //定义四个传感器
         accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//加速度传感器
