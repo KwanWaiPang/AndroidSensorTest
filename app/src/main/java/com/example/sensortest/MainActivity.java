@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this,LightSensorActivity.class));
                 break;
             case R.id.test_proximity_sensor:
-//                startActivity(new Intent(this,ProximitySensorActivity.class));
+                startActivity(new Intent(this,ProximitySensorActivity.class));
                 break;
             case R.id.test_gyroscope_sensor:
 //                startActivity(new Intent(this,GyroscopeSensorActivity.class));

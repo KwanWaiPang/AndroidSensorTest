@@ -2,10 +2,13 @@ package com.example.sensortest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -19,6 +22,15 @@ public class SensorListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor_list);
+
+        //返回
+        Button bt=(Button) findViewById(R.id.Back_to_Home);
+        bt.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SensorListActivity.this,MainActivity.class));
+            }
+        });
 
         tv=(TextView) findViewById(R.id.sensor_list_text);
         showSensorList();//自定义的函数，展示手机所带有的sensor

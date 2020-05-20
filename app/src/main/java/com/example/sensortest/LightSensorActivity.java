@@ -2,12 +2,15 @@ package com.example.sensortest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class LightSensorActivity extends AppCompatActivity implements SensorEventListener {
@@ -21,6 +24,15 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
         //使用相同的layout
         setContentView(R.layout.activity_sensor_list);
         tv=(TextView) findViewById(R.id.sensor_list_text);
+
+        //返回
+        Button bt=(Button) findViewById(R.id.Back_to_Home);
+        bt.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LightSensorActivity.this,MainActivity.class));
+            }
+        });
 
         //获取light传感器
         //先定义管理器

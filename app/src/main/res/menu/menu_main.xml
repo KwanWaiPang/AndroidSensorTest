@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="传感器列表" android:id="@+id/test_sensor_list"/>
-    <item android:title="光传感器" android:id="@+id/test_light_sensor"/>
-    <item android:title="近距离传感器" android:id="@+id/test_proximity_sensor"/>
+    <item android:title="List the Sensor in this phone" android:id="@+id/test_sensor_list"/>
+    <item android:title="LightSensor" android:id="@+id/test_light_sensor"/>
+    <item android:title="ProximitySensor" android:id="@+id/test_proximity_sensor"/>
     <item android:title="陀螺仪" android:id="@+id/test_gyroscope_sensor"/>
     <item android:title="加速测量仪" android:id="@+id/test_accelerometer_sensor"/>
     <item android:title="重力测量" android:id="@+id/test_accelerometer_2_sensor"/>
