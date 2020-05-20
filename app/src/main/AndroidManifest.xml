@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProximitySensorActivity"></activity>
+        <activity android:name=".GravityActivity"></activity>
+        <activity android:name=".AccelerometerSensorActivity" />
+        <activity android:name=".GyroscopeSensorActivity" />
+        <activity android:name=".ProximitySensorActivity" />
         <activity android:name=".LightSensorActivity" />
         <activity android:name=".SensorListActivity" />
         <activity android:name=".MainActivity">

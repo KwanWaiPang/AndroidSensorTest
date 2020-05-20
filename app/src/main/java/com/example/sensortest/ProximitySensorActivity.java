@@ -33,7 +33,8 @@ public class ProximitySensorActivity extends AppCompatActivity implements Sensor
         //使用相同的layout
         setContentView(R.layout.activity_sensor_list);
         tv=(TextView) findViewById(R.id.sensor_list_text);
-        //返回
+
+        //返回主页
         Button bt=(Button) findViewById(R.id.Back_to_Home);
         bt.setOnClickListener(new View.OnClickListener(){
             @Override

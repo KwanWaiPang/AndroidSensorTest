@@ -41,13 +41,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this,ProximitySensorActivity.class));
                 break;
             case R.id.test_gyroscope_sensor:
-//                startActivity(new Intent(this,GyroscopeSensorActivity.class));
+                startActivity(new Intent(this,GyroscopeSensorActivity.class));
                 break;
             case R.id.test_accelerometer_sensor:
-//                startActivity(new Intent(this,AccelerometerSensorActivity.class));
+                startActivity(new Intent(this,AccelerometerSensorActivity.class));
                 break;
             case R.id.test_accelerometer_2_sensor:
-//                startActivity(new Intent(this,GravityActivity.class));
+                startActivity(new Intent(this,GravityActivity.class));
                 break;
             case R.id.test_magnetic_sensor:
 //                startActivity(new Intent(this,MagneticFieldSensorActivity.class));
