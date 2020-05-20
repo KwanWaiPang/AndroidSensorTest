@@ -20,37 +20,36 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-        <Button
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:onClick="doUpdate"
-            android:text="更新"
-            android:id="@+id/update"/>
+<!--        <Button-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:onClick="doUpdate"-->
+<!--            android:text="更新"-->
+<!--            android:id="@+id/update"/>-->
 
-        <ToggleButton
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:onClick="doToggle"
-            android:id="@+id/toggle"
-            android:layout_toRightOf="@id/update"
-            android:layout_alignTop="@id/update"
-            android:textOff="坐标轴固定"
-            android:textOn="坐标轴适配"/>
+<!--        <ToggleButton-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:onClick="doToggle"-->
+<!--            android:id="@+id/toggle"-->
+<!--            android:layout_toRightOf="@id/update"-->
+<!--            android:layout_alignTop="@id/update"-->
+<!--            android:textOff="坐标轴固定"-->
+<!--            android:textOn="坐标轴适配"/>-->
 
-        <Button
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:onClick="doGeoNorth"
-            android:text="地理方位"
-            android:id="@+id/geo"
-            android:layout_toRightOf="@id/toggle"
-            android:layout_alignTop="@id/update"/>
+<!--        <Button-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:onClick="doGeoNorth"-->
+<!--            android:text="地理方位"-->
+<!--            android:id="@+id/geo"-->
+<!--            android:layout_toRightOf="@id/toggle"-->
+<!--            android:layout_alignTop="@id/update"/>-->
 
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:id="@+id/preferred"
-            android:layout_below="@id/update"
             android:textSize="20sp"/>
 
         <TextView

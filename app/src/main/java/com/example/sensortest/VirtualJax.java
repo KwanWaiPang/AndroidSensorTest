@@ -28,19 +28,21 @@ import android.widget.ToggleButton;
 
 public class VirtualJax extends AppCompatActivity implements SensorEventListener {
 
-    private ToggleButton toggleButton = null;
-    private TextView oldOne = null, nowOne = null;
+//    private ToggleButton toggleButton = null;//一个可选的按钮选项
+    private TextView oldOne = null, nowOne = null;//两种不同的方法获得方向数据
     private SensorManager sensorManager = null;
     private Sensor accelSensor = null, compassSensor = null, orientSensor = null, rotVecSensor = null;
+    //定义数组将方向传感器的数据放于数组中
     private float[] accelValues = new float[3], compassValues = new float[3], orientValues = new float[3], rotVecValues = null;
     private int mRotation;
     private LocationManager locManager = null;
 
+    @SuppressWarnings("deprecation")//表示不检测过期的方法
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_virtual_jax);
+        setContentView(R.layout.activity_virtual_jax);//跟之前的几个activity不同，这里定义了新的activity
 
         //返回主页
         Button bt=(Button) findViewById(R.id.Back_to_Home);
@@ -51,37 +53,41 @@ public class VirtualJax extends AppCompatActivity implements SensorEventListener
             }
         });
 
-        oldOne = (TextView) findViewById(R.id.orientation);
-        nowOne = (TextView) findViewById(R.id.preferred);
-        toggleButton = (ToggleButton) findViewById(R.id.toggle);
+        oldOne = (TextView) findViewById(R.id.orientation);//采用orientation传感器
+        nowOne = (TextView) findViewById(R.id.preferred);//推荐的方式
+//        toggleButton = (ToggleButton) findViewById(R.id.toggle);
 
+        //定义传感器管理器
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        compassSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        orientSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+        //定义四个传感器
+        accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);//加速度传感器
+        compassSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);//地磁传感器
+        orientSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);//方位传感器
+        rotVecSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);//旋转角度传感器？？？
 
-        rotVecSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
 
-
-        WindowManager window = (WindowManager) this.getSystemService(WINDOW_SERVICE);
-        if (Build.VERSION.SDK_INT < 8)
-            mRotation = window.getDefaultDisplay().getOrientation();
-        else
-            mRotation = window.getDefaultDisplay().getRotation();
-
-        locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        //当横屏的时候应该对坐标进行修订
+//        WindowManager window = (WindowManager) this.getSystemService(WINDOW_SERVICE);
+//        //检验当前的版本号
+//        if (Build.VERSION.SDK_INT < 8)
+//            mRotation = window.getDefaultDisplay().getOrientation();
+//        else
+//            mRotation = window.getDefaultDisplay().getRotation();
+//
+//        locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
     }
 
+
+    //在onResume()注册监听器，在onPause()中注销监听器
     @Override
     protected void onResume() {
         // TODO Auto-generated method stub
-        isAllowRemap = toggleButton.isChecked();
+//        isAllowRemap = toggleButton.isChecked();
         sensorManager.registerListener(this, accelSensor, SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(this, compassSensor, SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(this, orientSensor, SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(this, rotVecSensor, SensorManager.SENSOR_DELAY_GAME);
-
         super.onResume();
     }
 
@@ -95,6 +101,10 @@ public class VirtualJax extends AppCompatActivity implements SensorEventListener
         super.onPause();
     }
 
+
+
+
+    ///////////////////////////////////////////////////////********************************//////////////////////////////
     private boolean ready = false; //检查是否同时具有加速度传感器和磁场传感器
     private float[] inR = new float[9], outR = new float[9];
     private float[] inclineMatrix = new float[9];
@@ -104,34 +114,35 @@ public class VirtualJax extends AppCompatActivity implements SensorEventListener
     private float[] rotvecR = new float[9], rotQ = new float[4];
     private float[] rotvecOrientValues = new float[3];
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation")//表示不检测过期的方法
     @Override
     public void onSensorChanged(SensorEvent event) {
         // TODO Auto-generated method stub
-        switch (event.sensor.getType()) {
-            case Sensor.TYPE_ACCELEROMETER:
+        //将相关传感器的数值分别读入accelValues，compassValues（磁力感应器的数值）和orientValues和rotVecValues数组中
+        switch (event.sensor.getType()) {//获取传感器的类型
+            case Sensor.TYPE_ACCELEROMETER://当时加速度传感器时
                 for (int i = 0; i < 3; i++) {
-                    accelValues[i] = event.values[i];
+                    accelValues[i] = event.values[i];//将三个值分别放于accelValues中
                 }
                 if (compassValues[0] != 0) //即accelerator和magnetic传感器都有数值
-                    ready = true;
+                    ready = true;//此时检测同时具有加速度传感器与地磁传感器
                 break;
 
-            case Sensor.TYPE_MAGNETIC_FIELD:
+            case Sensor.TYPE_MAGNETIC_FIELD://获取地磁传感器的值
                 for (int i = 0; i < 3; i++) {
-                    compassValues[i] = event.values[i];
+                    compassValues[i] = event.values[i];//将三个值分别放于compassValues中
                 }
                 if (accelValues[2] != 0) //即accelerator和magnetic传感器都有数值，换一个轴向检查
-                    ready = true;
+                    ready = true;//此时检测同时具有加速度传感器与地磁传感器
                 break;
 
-            case Sensor.TYPE_ORIENTATION:
+            case Sensor.TYPE_ORIENTATION://如果是方向传感器
                 for (int i = 0; i < 3; i++) {
-                    orientValues[i] = event.values[i];
+                    orientValues[i] = event.values[i];//将三个值分别放于orientValues中
                 }
                 break;
 
-            case Sensor.TYPE_ROTATION_VECTOR:
+            case Sensor.TYPE_ROTATION_VECTOR://对于旋转传感器
                 if (rotVecValues == null) {
                     rotVecValues = new float[event.values.length];
                 }
@@ -141,29 +152,33 @@ public class VirtualJax extends AppCompatActivity implements SensorEventListener
                 break;
         }
 
-        if (!ready)
+        if (!ready)//此时如果没有有加速度与地磁传感器，则退出返回
             return;
 
-        //计算:inclination matrix I(inclineMatrix) as well as the rotation matrix R(inR)
+        //计算:inclination matrix 倾角矩阵 I(inclineMatrix) 以及 the rotation matrix 旋转矩阵 R(inR)
+        //根据加速传感器的数值accelValues[3]和磁力感应器的数值compassValues[3]，进行矩阵计算，获得方位
         if (SensorManager.getRotationMatrix(inR, inclineMatrix, accelValues, compassValues)) {
 
-            if (isAllowRemap && mRotation == Surface.ROTATION_90) {
-                //参数二表示设备X轴成为新坐标的Y轴，参数三表示设备的Y轴成为新坐标-x轴（方向相反）
-                SensorManager.remapCoordinateSystem(inR, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, outR);
-                SensorManager.getOrientation(outR, prefValues);
-            } else {
+            //下面是旋转屏幕的情况，此处不用
+//            if (isAllowRemap && mRotation == Surface.ROTATION_90) {
+//                //参数二表示设备X轴成为新坐标的Y轴，参数三表示设备的Y轴成为新坐标-x轴（方向相反）
+//                SensorManager.remapCoordinateSystem(inR, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, outR);
+//                SensorManager.getOrientation(outR, prefValues);
+//            } else {
 
 				/* Computes the device's orientation based on the rotation matrix.
 				 * 	When it returns, the array values is filled with the result:
+				 * 根据rotation matrix计算设备的方位。，范围数组：
 				values[0]: azimuth, rotation around the Z axis.
 				values[1]: pitch, rotation around the X axis.
 				values[2]: roll, rotation around the Y axis.*/
-                SensorManager.getOrientation(inR, prefValues);
-            }
+                SensorManager.getOrientation(inR, prefValues);//根据rotation matrix计算设备的方位
+//            }
+            //根据inclination matrix计算磁仰角。
             //计算磁仰角：地球表面任一点的地磁场总强度的矢量方向与水平面的夹角。
             mInclination = SensorManager.getInclination(inclineMatrix);
 
-
+            //显示测量值
             if (count++ % 100 == 0) {
                 doUpdate(null);
                 count = 1;
@@ -185,10 +200,9 @@ public class VirtualJax extends AppCompatActivity implements SensorEventListener
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // TODO Auto-generated method stub
-
     }
 
-
+    //定义一个函数来显示测量值
     public void doUpdate(View v) {
         if (!ready)
             return;
@@ -200,11 +214,10 @@ public class VirtualJax extends AppCompatActivity implements SensorEventListener
 			mAzimuth += 360.0;*/
 
 
-        String msg = String.format("推荐方式：\n方位角：%7.3f\npitch: %7.3f\nroll: %7.3f\n地磁仰角：%7.3f\n重适配坐标=%s\n%s\n",
+        String msg = String.format("Acceleration sensor + magnetic sensor：\nazimuth：%7.3f\npitch: %7.3f\nroll: %7.3f\n地磁仰角：%7.3f\n重适配坐标=%s\n%s\n",
                 mAzimuth, Math.toDegrees(prefValues[1]), Math.toDegrees(prefValues[2]),
                 Math.toDegrees(mInclination),
-                (isAllowRemap && mRotation == Surface.ROTATION_90) ? "true" : "false",
-                info);
+                (isAllowRemap && mRotation == Surface.ROTATION_90) ? "true" : "false", info);
 
         if (rotvecOrientValues != null && mRotation == Surface.ROTATION_0) {
             msg += String.format("Rotation Vector Sensor:\nazimuth %7.3f\npitch %7.3f\nroll %7.3f\nw,x,y,z %6.2f,%6.2f,%6.2f,%6.2f\n",
@@ -216,7 +229,7 @@ public class VirtualJax extends AppCompatActivity implements SensorEventListener
         }
         nowOne.setText(msg);
 
-        msg = String.format("老方式：\n方位角：%7.3f\npitch: %7.3f\nroll: %7.3f",
+        msg = String.format("Orientation Sensor：\nazimuth：%7.3f\npitch: %7.3f\nroll: %7.3f",
                 orientValues[0], orientValues[1], orientValues[2]);
         oldOne.setText(msg);
 
